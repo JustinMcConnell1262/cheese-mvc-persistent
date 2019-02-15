@@ -1,35 +1,36 @@
 package org.launchcode.models;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
-public class Category {
-
-    @Id
-    @GeneratedValue
-    private int id;
+public class Menu {
 
     @NotNull
     @Size(min=3, max=15)
     private String name;
 
-    @OneToMany
-    @JoinColumn(name = "category_id")
-    private List<Cheese> cheeses = new ArrayList<>();
+    @Id
+    @GeneratedValue
+    private int id;
 
-    public Category() { }
+    @ManyToMany
+    private List<Cheese> cheeses;
 
-    public Category(String name) {
+    public Menu() {}
+
+    public Menu(String name) {
         this.name = name;
+    }
+
+    public void addItem(Cheese item) {
+        cheeses.add(item);
     }
 
     public String getName() {
@@ -43,5 +44,10 @@ public class Category {
     public int getId() {
         return id;
     }
+
+    public List<Cheese> getCheese() {
+        return cheeses;
+    }
+
 
 }
